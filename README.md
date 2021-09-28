@@ -1,4 +1,4 @@
-# maoyan
+# 猫眼webapp
 
 ## Project setup
 ```
