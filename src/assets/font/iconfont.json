@@ -1,0 +1,79 @@
+{
+  "id": "2636188",
+  "name": "maoyan",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "15367",
+      "name": "下三角形",
+      "font_class": "xiasanjiaoxing",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "301779",
+      "name": "前进",
+      "font_class": "qianjin",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "587339",
+      "name": "返回",
+      "font_class": "fanhui",
+      "unicode": "e682",
+      "unicode_decimal": 59010
+    },
+    {
+      "icon_id": "881745",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e6e3",
+      "unicode_decimal": 59107
+    },
+    {
+      "icon_id": "6010927",
+      "name": "我的",
+      "font_class": "wode",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "9559033",
+      "name": "菜单",
+      "font_class": "ziyuan",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "11800276",
+      "name": "视频",
+      "font_class": "shipin",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "18399640",
+      "name": "电影",
+      "font_class": "dianying",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "18426683",
+      "name": "小视频，影视，48",
+      "font_class": "xiaoshipinyingshi48",
+      "unicode": "e6ff",
+      "unicode_decimal": 59135
+    },
+    {
+      "icon_id": "22209306",
+      "name": "演出-线性2-0",
+      "font_class": "yanchu-xianxing2-0",
+      "unicode": "e683",
+      "unicode_decimal": 59011
+    }
+  ]
+}
