@@ -2,7 +2,7 @@
   <main class="wrap">
     <div>
       <MyListRated />
-      <my-list-ticket @addBs="addBs" />
+      <my-list-ticket @addBs="addBs" :num="num" @finish="finish" />
     </div>
   </main>
 </template>
@@ -11,10 +11,13 @@
 import MyListRated from "./MyListRated.vue";
 import MyListTicket from "./MyListTicket.vue";
 import BetterScroll from "better-scroll";
-
+// 把bs定义成全局变量，这样可以在finish()中调用
+let bs;
 export default {
   data() {
-    return {};
+    return {
+      num: 1,
+    };
   },
   components: {
     MyListRated,
@@ -22,12 +25,27 @@ export default {
   },
   methods: {
     addBs() {
-      new BetterScroll(".wrap", {
+      bs = new BetterScroll(".wrap", {
         // ...... 详见配置项
         scrollY: true,
         scrollX: false,
         click: true,
+        // 上拉加载
+        pullUpLoad: {
+          // 离底还有100px的时候触发上拉加载
+          threshold: 100,
+        },
       });
+
+      bs.on("pullingUp", () => {
+        this.num++;
+      });
+    },
+    finish() {
+      // 重新计算高度
+      bs.refresh();
+      // 允许下一次上拉加载
+      bs.finishPullUp();
     },
   },
 };
