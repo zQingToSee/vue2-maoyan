@@ -154,3 +154,12 @@ a:hover {
 * {
   box-sizing: border-box;
 }
+
+.clearfix:after {
+  /*添加一个内容*/
+  content: "";
+  /*转换为一个块元素*/
+  display: block;
+  /*清除两侧的浮动*/
+  clear: both;
+}

@@ -60,6 +60,10 @@ nav {
       color: #666;
     }
 
+    li:nth-last-child(1) {
+      flex: 1.5;
+    }
+
     .active {
       font-size: @m-font;
       color: #000;
