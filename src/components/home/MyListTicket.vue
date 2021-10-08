@@ -4,6 +4,7 @@
       class="list-block clearfix"
       v-for="(item, index) in ticketList"
       :key="index"
+      @click="gotoDetail(item.movieid)"
     >
       <img :src="item.img | imgUrl" alt="" />
       <div class="content">
@@ -91,6 +92,10 @@ export default {
             this.$emit("finish");
           }
         });
+    },
+    gotoDetail(id) {
+      // 编程式导航，跳转到详情页
+      this.$router.push("/detail/" + id);
     },
   },
   filters: {

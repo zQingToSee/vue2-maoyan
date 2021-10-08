@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <router-view />
-  </div>
+  <div>详情页面</div>
 </template>
 
 <script>
@@ -9,6 +7,14 @@ export default {
   data() {
     return {};
   },
+
+  components: {},
+
+  computed: {},
+
+  mounted() {},
+
+  methods: {},
 };
 </script>
 
