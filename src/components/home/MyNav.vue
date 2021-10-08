@@ -1,14 +1,14 @@
 <template>
   <nav>
-    <div class="city">杭州</div>
+    <div class="city" @click="gotoCity">杭州</div>
     <ul>
       <li
         v-for="(item, index) in navList"
-        :key="item"
+        :key="item.url"
         :class="{ active: index === active }"
-        @click="liClick(index)"
+        @click="liClick(index, item.url)"
       >
-        {{ item }}
+        {{ item.title }}
       </li>
     </ul>
     <span class="iconfont icon-sousuo"></span>
@@ -19,13 +19,35 @@
 export default {
   data() {
     return {
-      navList: ["热映", "影院", "待映", "经典电影"],
+      // navList: ["热映", "影院", "待映", "经典电影"],
+      navList: [
+        {
+          title: "热映",
+          url: "/hot",
+        },
+        {
+          title: "影院",
+          url: "/cinema",
+        },
+        {
+          title: "待映",
+          url: "/wait",
+        },
+        {
+          title: "经典电影",
+          url: "/classic",
+        },
+      ],
       active: 0,
     };
   },
   methods: {
-    liClick(i) {
+    liClick(i, url) {
       this.active = i;
+      this.$router.push("/home/movies" + url);
+    },
+    gotoCity() {
+      this.$router.push("/city");
     },
   },
 };

@@ -1,20 +1,18 @@
 <template>
-  <div>详情页面</div>
+  <div>详情页面{{ id }}</div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {};
-  },
-
-  components: {},
-
-  computed: {},
-
-  mounted() {},
-
-  methods: {},
+  props: ["id"],
+  // data() {
+  //   return {
+  //     id: "",
+  //   };
+  // },
+  // created() {
+  //   this.id = this.$route.params.id;
+  // },
 };
 </script>
 

@@ -4,8 +4,8 @@
       <li
         v-for="(item, index) in footerList"
         :key="index"
-        :class="{ active: index == active }"
-        @click="handleClick(index)"
+        :class="{ active: item.url === path }"
+        @click="handleClick(item.url)"
       >
         <span class="iconfont" :class="'icon-' + item.icon"></span>
         <p>{{ item.title }}</p>
@@ -22,30 +22,42 @@ export default {
         {
           icon: "dianying",
           title: "电影/影院",
+          url: "/movies",
         },
         {
           icon: "shipin",
           title: "视频",
+          url: "/video",
         },
         {
           icon: "xiaoshipinyingshi48",
           title: "小视频",
+          url: "/mini",
         },
         {
           icon: "yanchu-xianxing2-0",
           title: "演出",
+          url: "/show",
         },
         {
           icon: "wode",
           title: "我的",
+          url: "/mine",
         },
       ],
-      active: 0,
+      path: sessionStorage.getItem("active") || "/movies",
     };
   },
   methods: {
-    handleClick(i) {
-      this.active = i;
+    handleClick(url) {
+      this.$router.push("/home" + url);
+    },
+  },
+  watch: {
+    $route(to) {
+      const i = "/" + to.path.split("/")[2];
+      this.path = i;
+      sessionStorage.setItem("active", i);
     },
   },
 };

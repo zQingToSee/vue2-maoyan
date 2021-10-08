@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import MyListRated from "./MyListRated.vue";
-import MyListTicket from "./MyListTicket.vue";
+import MyListRated from "../../../components/home/MyListRated.vue";
+import MyListTicket from "../../../components/home/MyListTicket.vue";
 import BetterScroll from "better-scroll";
 // 把bs定义成全局变量，这样可以在finish()中调用
 let bs;
