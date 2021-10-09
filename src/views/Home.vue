@@ -1,7 +1,9 @@
 <template>
   <!-- 首页 -->
   <div>
-    <router-view />
+    <transition name="fade">
+      <router-view />
+    </transition>
     <my-footer />
   </div>
 </template>
@@ -17,4 +19,13 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
