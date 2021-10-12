@@ -8,35 +8,24 @@
 </template>
 
 <script>
-import NProgress from "nprogress";
+import { mapState, mapActions } from "vuex";
 export default {
-  // props: ["id"],
   data() {
     return {
       id: "",
-      detailInfo: {},
     };
+  },
+  computed: {
+    ...mapState({
+      detailInfo: (state) => state.detail.detailInfo,
+    }),
   },
   created() {
     this.id = this.$route.params.id;
+    this.getDetailDataAsync({ id: this.id }); // 数据请求
   },
   methods: {
-    getData(id) {
-      fetch("http://www.pudge.wang:3080/api/movies/detail", {
-        method: "POST",
-        body: JSON.stringify({
-          id: id,
-        }),
-        headers: {
-          "content-type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((res) => {
-          // console.log(res);
-          this.detailInfo = res.result;
-        });
-    },
+    ...mapActions("detail", ["getDetailDataAsync"]),
     guess() {
       this.$router.push("/detail/1240838");
     },
@@ -46,30 +35,9 @@ export default {
       return val.split("/w.h").join("/100.200");
     },
   },
-  beforeRouteEnter(to, from, next) {
-    NProgress.start();
-    fetch("http://www.pudge.wang:3080/api/movies/detail", {
-      method: "POST",
-      body: JSON.stringify({
-        id: to.params.id,
-      }),
-      headers: {
-        "content-type": "application/json",
-      },
-    })
-      .then((response) => {
-        NProgress.done();
-        return response.json();
-      })
-      .then((res) => {
-        next((vm) => {
-          vm.detailInfo = res.result;
-        });
-      });
-  },
   //* 猜你喜欢要用到beforeRouteUpdate方法
   beforeRouteUpdate(to, from, next) {
-    this.getData(to.params.id);
+    this.getDetailDataAsync({ id: to.params.id });
     next();
   },
 };

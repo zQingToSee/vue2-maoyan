@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <div class="city" @click="gotoCity">杭州</div>
+    <div class="city" @click="gotoCity">{{ cityName }}</div>
     <ul>
       <li
         v-for="(item, index) in navList"
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -41,6 +42,9 @@ export default {
       active: 0,
     };
   },
+  computed: mapState({
+    cityName: (state) => state.city.cityName,
+  }),
   methods: {
     liClick(i, url) {
       this.active = i;

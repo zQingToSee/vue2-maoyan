@@ -17,37 +17,28 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import BetterScroll from "better-scroll";
 export default {
   data() {
-    return {
-      ratedList: [],
-    };
+    return {};
   },
-  // 在生命周期的created中请求数据
+  computed: {
+    ...mapState({
+      ratedList: (state) => state.rated.ratedList,
+    }),
+  },
   created() {
-    this.getData(); // 请求数据
+    this.getRatedListAsync().then(() => {
+      new BetterScroll(".wrapper", {
+        scrollX: true,
+        scrollY: false,
+        click: true,
+      });
+    }); // 请求数据
   },
   methods: {
-    getData() {
-      fetch("http://www.pudge.wang:3080/api/rated/list")
-        .then((response) => response.json())
-        .then(async (res) => {
-          if (res.status == 0) {
-            this.ratedList = res.result;
-
-            await this.$nextTick(); // 等待页面渲染完成后执行下一步
-
-            new BetterScroll(".wrapper", {
-              // ...... 详见配置项
-              scrollX: true,
-              scrollY: false,
-              click: true,
-            });
-          }
-        })
-        .catch((err) => console.log(err));
-    },
+    ...mapActions("rated", ["getRatedListAsync"]),
   },
 };
 </script>
@@ -65,13 +56,6 @@ export default {
     font-size: 14px;
     color: #333;
     margin-bottom: 12px;
-  }
-
-  .wrap {
-    width: 100%;
-    height: 145px;
-    // overflow: auto;
-    overflow: hidden;
   }
 
   ul {

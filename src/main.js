@@ -5,7 +5,7 @@ import Vue from "vue";
 // 引入app根组件
 import App from "./App.vue";
 import router from "./router";
-// import store from "./store";
+import store from "./store";
 
 // 引入css重置样式
 import "./assets/css/reset.less";
@@ -20,6 +20,6 @@ Vue.config.productionTip = false;
 
 new Vue({
   router: router,
-  // store,
+  store,
   render: (h) => h(App),
 }).$mount("#app");

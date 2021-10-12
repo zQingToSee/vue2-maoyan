@@ -1,9 +1,14 @@
 <template>
-  <div>
+  <div v-if="cityList.length">
     <section class="hot">
       <div class="title">热门城市</div>
       <ul>
-        <li v-for="city in hotCities.cities" :key="city.cityId" class="li">
+        <li
+          v-for="city in hotCities.cities"
+          :key="city.cityId"
+          class="li"
+          @click="chooseCity(city)"
+        >
           {{ city.name }}
         </li>
       </ul>
@@ -11,7 +16,12 @@
     <section v-for="item in otherCities" :key="item.prefix">
       <div class="title">{{ item.prefix | toUpperCase }}</div>
       <ul>
-        <li v-for="city in item.cities" :key="city.cityId" class="li">
+        <li
+          v-for="city in item.cities"
+          :key="city.cityId"
+          class="li"
+          @click="chooseCity(city)"
+        >
           {{ city.name }}
         </li>
       </ul>
@@ -20,21 +30,25 @@
 </template>
 
 <script>
+import { mapState, mapActions, mapGetters } from "vuex";
 export default {
   data() {
-    return {
-      cityList: [],
-    };
-  },
-  created() {
-    this.getCityList(); // 请求城市数据
+    return {};
   },
   computed: {
-    hotCities() {
-      return this.cityList[0];
-    },
-    otherCities() {
-      return this.cityList.slice(1);
+    ...mapState({
+      cityList: (state) => state.city.cityList,
+    }),
+    ...mapGetters("city", ["hotCities", "otherCities"]),
+  },
+  created() {
+    this.getCityListAsync(); // 请求数据
+  },
+  methods: {
+    ...mapActions("city", ["getCityListAsync"]),
+    chooseCity(city) {
+      this.$store.commit("changeCity", { name: city.name, id: city.cityId });
+      this.$router.go(-1);
     },
   },
   filters: {
@@ -42,50 +56,10 @@ export default {
       return val.toUpperCase();
     },
   },
-  methods: {
-    getCityList() {
-      fetch("http://www.pudge.wang:3080/api/area/list")
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res);
-          this.cityList = res.result;
-        })
-        .catch((err) => console.log(err));
-    },
-  },
 };
 </script>
 
 <style lang="less" scoped>
-// section:first-child {
-//   ul {
-//     display: flex;
-//     flex-wrap: wrap; // 换行
-
-//     .li {
-//       margin-left: 15px;
-//       background: #fff;
-//       width: 29%;
-//       height: 33px;
-//       line-height: 33px;
-//       margin-top: 5px;
-//       margin-bottom: 10px;
-//       margin-left: 4%;
-//       padding: 0 4px;
-//       border: 1px solid #e6e6e6;
-//       border-radius: 3px;
-//       text-align: center;
-//       font-size: 14px;
-//       color: #333;
-//     }
-//     .li:nth-child(1),
-//     .li:nth-child(2),
-//     .li:nth-child(3) {
-//       margin-top: 10px;
-//     }
-//   }
-// }
-
 .hot {
   ul {
     display: flex;
