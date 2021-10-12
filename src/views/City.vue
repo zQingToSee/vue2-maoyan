@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {};
@@ -46,8 +46,12 @@ export default {
   },
   methods: {
     ...mapActions("city", ["getCityListAsync"]),
+    ...mapMutations("city", ["changeCity"]),
     chooseCity(city) {
-      this.$store.commit("changeCity", { name: city.name, id: city.cityId });
+      this.changeCity({
+        name: city.name,
+        id: city.cityId,
+      });
       this.$router.go(-1);
     },
   },
