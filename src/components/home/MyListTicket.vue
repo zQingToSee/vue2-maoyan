@@ -24,78 +24,34 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
   props: ["num"],
   data() {
     return {
-      ticketList: [],
-      ids: [],
       // 设置一次加载6条数据
       size: 6,
-      // 开始的索引
-      startId: 0,
-      // 所有电影的条数
-      count: 0,
     };
   },
   watch: {
     num() {
-      this.getMore();
+      this.getMore({ size: this.size }).then(() => {
+        this.$emit("finish");
+      });
     },
   },
-  // 在生命周期的created中请求数据
+  computed: {
+    ...mapState("ticket", ["ticketList", "ids", "startId", "count"]),
+  },
   created() {
-    this.getData();
+    this.getData().then(() => {
+      this.$emit("addBs");
+    });
   },
   methods: {
-    getData() {
-      fetch("http://www.pudge.wang:3080/api/movies/list")
-        .then((response) => response.json())
-        .then(async (res) => {
-          if (res.status == 0) {
-            // 获取第一次的电影数据
-            this.ticketList = res.result;
-            // 获取所有电影的id
-            this.ids = res.ids;
-            // 拿到12条数据，下次从12开始
-            this.startId = res.result.length;
-            this.count = res.count;
-            await this.$nextTick();
-            this.$emit("addBs");
-          }
-        })
-        .catch((err) => console.log(err));
-    },
-    getMore() {
-      // 截取下一次的电影id
-      const arr = this.ids.slice(this.startId, this.startId + this.size);
-      const str = arr.join();
-
-      // fetch的post请求
-      fetch("http://www.pudge.wang:3080/api/movies/more", {
-        method: "POST",
-        body: JSON.stringify({
-          ids: str,
-        }), // data can be `string` or {object}!
-        headers: new Headers({
-          "Content-Type": "application/json",
-        }),
-      })
-        .then((res) => res.json())
-        .catch((error) => console.error("Error:", error))
-        .then(async (response) => {
-          if (response.status == 0) {
-            this.ticketList = [...this.ticketList, ...response.result];
-            // stratId需要重新计算
-            this.startId = this.ticketList.length;
-            await this.$nextTick();
-            this.$emit("finish");
-          }
-        });
-    },
+    ...mapActions("ticket", ["getData", "getMore"]),
     gotoDetail(id) {
-      // 编程式导航，跳转到详情页
-      this.$router.push("/detail/" + id);
+      this.$router.push("/detail/" + id); // 编程式导航，跳转到详情页
     },
   },
   filters: {
